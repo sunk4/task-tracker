@@ -8,7 +8,7 @@ services:
       PGDATA: /var/lib/postgresql/data
       POSTGRES_DB: task_tracker
     volumes:
-        - postgres:/data/postgres
+      - postgres:/data/postgres
     ports:
       - 5432:5432
     networks:
@@ -22,6 +22,9 @@ services:
       - "1025:1025"
   tasktracker-api:
     container_name: task-tracker-api
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     image: tasktracker/tasktracker:1.0.0
     ports:
       - 8088:8088
@@ -31,13 +34,16 @@ services:
       - postgres
   task-tracker-ui:
     container_name: task-tracker-ui
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     image: task-tracker-ui:1.0.0
     ports:
       - 5173:80
     networks:
       - spring-demo
     depends_on:
-        - tasktracker-api
+      - tasktracker-api
 
 networks:
   spring-demo:
