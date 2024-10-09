@@ -13,7 +13,7 @@ ARG APP_VERSION=1.0.0
 WORKDIR /app
 COPY --from=build /build/target/task-tracker-${APP_VERSION}.jar task-tracker-${APP_VERSION}.jar
 EXPOSE 8080
-ENV DB_URL=jdbc:postgresql://postgres-sql-task-tracker:5432/task_tracker
+ENV DB_URL=jdbc:postgresql://172.19.0.2:5432/task_tracker
 ENV ACTIVE_PROFILE=${PROFILE}
 ENV JAR_VERSION=${APP_VERSION}
 
