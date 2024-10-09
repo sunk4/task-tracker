@@ -1,0 +1,55 @@
+spring:
+  sql:
+    init:
+      mode: never
+  springdoc:
+    api-docs:
+      enabled: true
+    swagger-ui:
+      enabled: true
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: never
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      show-sql: false
+      use_sql_comments: false
+      format_sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        SQL: none
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  jpa.defer-datasource-initialization: false
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+            trust: "*"
+        starttls:
+          enabled: true
+  protocol: smtp
+application:
+  security:
+    jwt:
+      secret-key: ${JWT_SECRET_KEY}
+      expiration: 86400000
+      refresh-token:
+        expiration: 604800000
+  mailing:
+    frontend:
+      activation-url: https://${FRONTEND_URL}/activate_account
+server:
+  port: 8088
