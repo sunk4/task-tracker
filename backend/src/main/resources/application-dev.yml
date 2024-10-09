@@ -1,0 +1,55 @@
+spring:
+  sql:
+    init:
+      mode: always
+  springdoc:
+    api-docs:
+      enabled: true
+    swagger-ui:
+      enabled: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/task_tracker
+    username: root
+    password: root
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+      use_sql_comments: true
+      format_sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        SQL: debug
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  jpa.defer-datasource-initialization: true
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    username: trnka.roman13@gmail.com
+    password: bmwf pkzg exck moeb
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+            trust: "*"
+        starttls:
+          enabled: true
+  protocol: smtp
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A58644152215245ZSDA28472B4B6250645367566B5970
+      expiration: 86400000
+      refresh-token:
+        expiration: 604800000
+  mailing:
+    frontend:
+      activation-url: http://localhost:5174/activate_account
+server:
+  port: 8088

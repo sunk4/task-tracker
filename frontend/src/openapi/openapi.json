@@ -1,0 +1,648 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Task Tracker API",
+    "description": "Task Tracker API",
+    "contact": { "name": "Roman Trnka", "email": "trnka.roman13@gmail.com" },
+    "version": "1.0"
+  },
+  "servers": [{ "url": "http://localhost:8088/api/v1", "description": "Local server" }],
+  "security": [{ "bearer-key": [] }],
+  "tags": [
+    { "name": "Admin Controller", "description": "This controller is responsible for admin actions" },
+    { "name": "Authentication Controller", "description": "This controller is responsible for authentication" }
+  ],
+  "paths": {
+    "/task": {
+      "post": {
+        "tags": ["Task"],
+        "operationId": "addTask",
+        "requestBody": {
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/TaskRequest" } } },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "type": "string", "format": "uuid" } } }
+          }
+        }
+      }
+    },
+    "/project": {
+      "get": {
+        "tags": ["Project"],
+        "operationId": "findAllProjects",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 0 }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 10 }
+          },
+          { "name": "isOpen", "in": "query", "required": false, "schema": { "type": "boolean" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/PageResponseProjectResponse" } }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Project"],
+        "operationId": "addProject",
+        "requestBody": {
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ProjectRequest" } } },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "type": "string", "format": "uuid" } } }
+          }
+        }
+      }
+    },
+    "/project/{id}/participants": {
+      "post": {
+        "tags": ["Project"],
+        "operationId": "addParticipants",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "requestBody": {
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ParticipantIdsRequest" } } },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ProjectResponse" } } }
+          }
+        }
+      }
+    },
+    "/comment": {
+      "post": {
+        "tags": ["Comment"],
+        "operationId": "addComment",
+        "requestBody": {
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CommentRequest" } } },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "type": "string", "format": "uuid" } } }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": ["Authentication Controller"],
+        "operationId": "register",
+        "requestBody": {
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RegistrationRequest" } } },
+          "required": true
+        },
+        "responses": {
+          "202": { "description": "Accepted", "content": { "application/json": { "schema": { "type": "object" } } } }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Authentication Controller"],
+        "operationId": "login",
+        "requestBody": {
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/LoginRequest" } } },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthenticationResponse" } } }
+          }
+        }
+      }
+    },
+    "/task/{id}": {
+      "get": {
+        "tags": ["Task"],
+        "operationId": "getTask",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/TaskDTO" } } }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Task"],
+        "operationId": "deleteTask",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "responses": { "200": { "description": "OK" } }
+      },
+      "patch": {
+        "tags": ["Task"],
+        "operationId": "updateTask",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "requestBody": {
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/TaskRequest" } } },
+          "required": true
+        },
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/project/{id}": {
+      "get": {
+        "tags": ["Project"],
+        "operationId": "getProject",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ProjectResponse" } } }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Project"],
+        "operationId": "updateProject",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "requestBody": {
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ProjectRequest" } } },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ProjectResponse" } } }
+          }
+        }
+      }
+    },
+    "/comment/{id}": {
+      "get": {
+        "tags": ["Comment"],
+        "operationId": "getComment",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CommentResponse" } } }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Comment"],
+        "operationId": "updateComment",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "requestBody": {
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CommentRequest" } } },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CommentResponse" } } }
+          }
+        }
+      }
+    },
+    "/admin": {
+      "get": {
+        "tags": ["Admin Controller"],
+        "operationId": "findAllUsersRole",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 0 }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 10 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/PageResponseUsersRoleResponse" } }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Admin Controller"],
+        "operationId": "updateUserRole",
+        "requestBody": {
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UsersRoleRequest" } } },
+          "required": true
+        },
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": ["User"],
+        "operationId": "getAllUsers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/UserDTO" } } }
+            }
+          }
+        }
+      }
+    },
+    "/task/{projectId}/project": {
+      "get": {
+        "tags": ["Task"],
+        "operationId": "getTasksByProject",
+        "parameters": [
+          { "name": "projectId", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } },
+          {
+            "name": "pageNum",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 0 }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 10 }
+          },
+          { "name": "userId", "in": "query", "required": false, "schema": { "type": "string", "format": "uuid" } },
+          {
+            "name": "dueDate",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "format": "date-time" }
+          },
+          { "name": "status", "in": "query", "required": false, "schema": { "type": "string" } },
+          { "name": "name", "in": "query", "required": false, "schema": { "type": "string" } },
+          { "name": "priority", "in": "query", "required": false, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PageResponseTaskDTO" } } }
+          }
+        }
+      }
+    },
+    "/task/myTasks": {
+      "get": {
+        "tags": ["Task"],
+        "operationId": "getMyTasks",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 0 }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 10 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PageResponseTaskDTO" } } }
+          }
+        }
+      }
+    },
+    "/project/owner": {
+      "get": {
+        "tags": ["Project"],
+        "operationId": "findProjectsByOwner",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 0 }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 10 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/PageResponseProjectResponse" } }
+            }
+          }
+        }
+      }
+    },
+    "/helloWorld": {
+      "get": {
+        "tags": ["Hello World"],
+        "operationId": "helloWorld",
+        "responses": {
+          "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "string" } } } }
+        }
+      }
+    },
+    "/comment/{id}/comments": {
+      "get": {
+        "tags": ["Comment"],
+        "operationId": "findAllCommentsByTaskId",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } },
+          {
+            "name": "pageNum",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 0 }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 10 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/PageResponseCommentResponse" } }
+            }
+          }
+        }
+      }
+    },
+    "/auth/is-token-exparied": {
+      "get": {
+        "tags": ["Authentication Controller"],
+        "operationId": "isTokenValid",
+        "parameters": [{ "name": "token", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": { "description": "OK", "content": { "application/json": { "schema": { "type": "boolean" } } } }
+        }
+      }
+    },
+    "/auth/activate-account": {
+      "get": {
+        "tags": ["Authentication Controller"],
+        "operationId": "confirmAccount",
+        "parameters": [{ "name": "token", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/admin/{id}": {
+      "get": {
+        "tags": ["Admin Controller"],
+        "operationId": "findUserRolesById",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UsersRoleResponse" } } }
+          }
+        }
+      }
+    },
+    "/project/{id}/participants/{participantId}": {
+      "delete": {
+        "tags": ["Project"],
+        "operationId": "removeParticipant",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } },
+          { "name": "participantId", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ProjectResponse" } } }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TaskRequest": {
+        "required": ["description", "dueDate", "name", "priority", "projectId", "status"],
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "name": { "maxLength": 255, "minLength": 0, "type": "string" },
+          "description": { "type": "string" },
+          "status": { "type": "string" },
+          "priority": { "type": "string" },
+          "dueDate": { "type": "string", "format": "date-time" },
+          "projectId": { "type": "string", "format": "uuid" },
+          "changeDescription": { "type": "string" },
+          "userId": { "type": "string", "format": "uuid" }
+        }
+      },
+      "ProjectRequest": {
+        "required": ["description", "name", "ownerId"],
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "startDate": { "type": "string", "format": "date-time" },
+          "endDate": { "type": "string", "format": "date-time" },
+          "projectCover": { "type": "string" },
+          "isOpen": { "type": "boolean" },
+          "ownerId": { "type": "string", "format": "uuid" },
+          "userProjectIds": { "type": "array", "items": { "type": "string", "format": "uuid" } },
+          "taskIds": { "type": "array", "items": { "type": "string", "format": "uuid" } },
+          "participantIds": { "type": "array", "items": { "type": "string", "format": "uuid" } }
+        }
+      },
+      "ParticipantIdsRequest": {
+        "required": ["participantIds"],
+        "type": "object",
+        "properties": { "participantIds": { "type": "array", "items": { "type": "string", "format": "uuid" } } }
+      },
+      "ProjectResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "startDate": { "type": "string", "format": "date-time" },
+          "endDate": { "type": "string", "format": "date-time" },
+          "projectCover": { "type": "string", "format": "byte" },
+          "owner": { "$ref": "#/components/schemas/UserDTO" },
+          "userProjects": { "type": "array", "items": { "$ref": "#/components/schemas/UserProjectDTO" } },
+          "tasks": { "type": "array", "items": { "$ref": "#/components/schemas/TaskDTO" } },
+          "participants": { "type": "array", "items": { "$ref": "#/components/schemas/UserDTO" } },
+          "open": { "type": "boolean" }
+        }
+      },
+      "TaskDTO": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "dueDate": { "type": "string", "format": "date-time" },
+          "status": { "type": "string" },
+          "priority": { "type": "string" },
+          "user": { "$ref": "#/components/schemas/UserDTO" },
+          "project": { "$ref": "#/components/schemas/ProjectResponse" }
+        }
+      },
+      "UserDTO": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "fullName": { "type": "string" },
+          "email": { "type": "string" }
+        }
+      },
+      "UserProjectDTO": { "type": "object" },
+      "CommentRequest": {
+        "required": ["comment", "taskId"],
+        "type": "object",
+        "properties": { "comment": { "type": "string" }, "taskId": { "type": "string", "format": "uuid" } }
+      },
+      "RegistrationRequest": {
+        "required": ["email", "firstname", "lastname", "password"],
+        "type": "object",
+        "properties": {
+          "firstname": { "type": "string" },
+          "lastname": { "type": "string" },
+          "email": { "type": "string" },
+          "password": { "maxLength": 2147483647, "minLength": 8, "type": "string" }
+        }
+      },
+      "LoginRequest": {
+        "required": ["email", "password"],
+        "type": "object",
+        "properties": { "email": { "type": "string" }, "password": { "type": "string" } }
+      },
+      "AuthenticationResponse": {
+        "type": "object",
+        "properties": { "token": { "type": "string" }, "roles": { "type": "array", "items": { "type": "string" } } }
+      },
+      "CommentResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "comment": { "type": "string" },
+          "taskId": { "type": "string", "format": "uuid" },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "createdBy": { "$ref": "#/components/schemas/UserDTO" }
+        }
+      },
+      "UsersRoleRequest": {
+        "type": "object",
+        "properties": {
+          "userId": { "type": "string", "format": "uuid" },
+          "roleId": { "type": "string", "format": "uuid" }
+        }
+      },
+      "PageResponseTaskDTO": {
+        "type": "object",
+        "properties": {
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/TaskDTO" } },
+          "pageNum": { "type": "integer", "format": "int32" },
+          "pageSize": { "type": "integer", "format": "int32" },
+          "count": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" }
+        }
+      },
+      "PageResponseProjectResponse": {
+        "type": "object",
+        "properties": {
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/ProjectResponse" } },
+          "pageNum": { "type": "integer", "format": "int32" },
+          "pageSize": { "type": "integer", "format": "int32" },
+          "count": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" }
+        }
+      },
+      "PageResponseCommentResponse": {
+        "type": "object",
+        "properties": {
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/CommentResponse" } },
+          "pageNum": { "type": "integer", "format": "int32" },
+          "pageSize": { "type": "integer", "format": "int32" },
+          "count": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" }
+        }
+      },
+      "PageResponseUsersRoleResponse": {
+        "type": "object",
+        "properties": {
+          "data": { "type": "array", "items": { "$ref": "#/components/schemas/UsersRoleResponse" } },
+          "pageNum": { "type": "integer", "format": "int32" },
+          "pageSize": { "type": "integer", "format": "int32" },
+          "count": { "type": "integer", "format": "int64" },
+          "totalPages": { "type": "integer", "format": "int32" }
+        }
+      },
+      "RoleResponse": {
+        "type": "object",
+        "properties": { "name": { "type": "string" }, "id": { "type": "string", "format": "uuid" } }
+      },
+      "UsersRoleResponse": {
+        "type": "object",
+        "properties": {
+          "user": { "$ref": "#/components/schemas/UserDTO" },
+          "role": { "$ref": "#/components/schemas/RoleResponse" }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearer-key": {
+        "type": "http",
+        "description": "Bearer token authentication",
+        "in": "header",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
