@@ -6,6 +6,7 @@ RUN mvn dependency:go-offline
 COPY /src /build/src/
 RUN mvn clean package -DskipTests
 
+
 # Run stage
 FROM amazoncorretto:17
 ARG PROFILE=dev
