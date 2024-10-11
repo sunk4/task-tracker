@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: postgresql://${RENDER_DB_USERNAME}:${RENDER_DB_PASSWORD}@dpg-cs3biljv2p9s7390lkc0-a:5432/task_tracker_postgresql
+    url: jdbc:postgresql://dpg-cs4e7lggph6c73bvhe60-a.frankfurt-postgres.render.com:5432/task_tracker_postgresql_0soi
     username: ${RENDER_DB_USERNAME}
     password: ${RENDER_DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
