@@ -9,7 +9,7 @@ RUN mvn clean package -DskipTests
 
 # Run stage
 FROM amazoncorretto:17
-ARG PROFILE=dev
+ARG PROFILE=prod
 ARG APP_VERSION=1.0.0
 WORKDIR /app
 COPY --from=build /build/target/task-tracker-${APP_VERSION}.jar task-tracker-${APP_VERSION}.jar
