@@ -5,6 +5,11 @@ spring:
     password: ${RENDER_DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
     initialization-mode: always
+  logging:
+    level:
+      org:
+        springframework:
+          jdbc: DEBUG
 
   jpa:
     hibernate:
