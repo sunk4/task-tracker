@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://dpg-cs4e7lggph6c73bvhe60-a.frankfurt-postgres.render.com:5432/task_tracker_postgresql_0soi?user=task_tracker_postgresql_0soi_user&password=PualeqUtmDahjCvqY87mHYYNPhJDJDz0
-#    username: ${RENDER_DB_USERNAME}
-#    password: ${RENDER_DB_PASSWORD}
+    url: jdbc:postgresql://dpg-cs4e7lggph6c73bvhe60-a.frankfurt-postgres.render.com:5432/task_tracker_postgresql_0soi
+    username: ${RENDER_DB_USERNAME}
+    password: ${RENDER_DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
     initialization-mode: always
 
