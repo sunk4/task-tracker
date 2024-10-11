@@ -1,10 +1,15 @@
 spring:
   datasource:
     url: jdbc:postgresql://dpg-cs4e7lggph6c73bvhe60-a.frankfurt-postgres.render.com:5432/task_tracker_postgresql_0soi
-    username: ${RENDER_DB_USERNAME}
-    password: ${RENDER_DB_PASSWORD}
+    username: task_tracker_postgresql_0soi_user
+    password: PualeqUtmDahjCvqY87mHYYNPhJDJDz0
     driver-class-name: org.postgresql.Driver
     initialization-mode: always
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
   logging:
     level:
       org:
