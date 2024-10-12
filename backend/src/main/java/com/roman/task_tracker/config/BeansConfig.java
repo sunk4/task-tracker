@@ -54,7 +54,7 @@ public class BeansConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:5173", "http://localhost:5174")
+                        .allowedOrigins("https://task-tracker-w7g0.onrender.com", "http://localhost:5174")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
                         .allowedHeaders("*")
                         .allowCredentials(true);
