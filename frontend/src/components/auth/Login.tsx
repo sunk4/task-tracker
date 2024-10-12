@@ -23,9 +23,11 @@ const Login: React.FC = () => {
   });
   const onSubmitLogin = async (data: LoginRequest) => {
     const api = new AuthenticationControllerApi(configWithOutToken);
+    console.log(api);
 
     try {
       const result = await api.login({ loginRequest: data });
+      console.log(result);
       login(result.token ? result.token : '', result.roles ? result.roles : []);
       navigate('/projects');
     } catch (err: unknown) {
