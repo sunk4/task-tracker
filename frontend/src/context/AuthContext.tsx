@@ -10,8 +10,9 @@ interface AuthContextProps {
 }
 const initializeConfig = () => {
   const authToken = localStorage.getItem('authToken') || '';
+  const basePath = import.meta.env.VITE_API_BASE_URL || '/api';
   return new Configuration({
-    basePath: '/api',
+    basePath: basePath.replace(/\/+$/, ''),
     accessToken: authToken,
   });
 };
