@@ -1,13 +1,19 @@
-# the base image
+# Stage 1: Build the JAR file
+FROM maven:3.8.5-openjdk-17 AS build
+WORKDIR /app
+
+# Copy the pom.xml and the source code
+COPY pom.xml .
+COPY src ./src
+
+# Package the application and create a JAR file
+RUN mvn clean package -DskipTests
+
+# Stage 2: Build the final image
 FROM amazoncorretto:17
 
-# the JAR file path
-ARG JAR_FILE=target/*.jar
+# Copy the JAR file from the previous stage
+COPY --from=build /app/target/*.jar application.jar
 
-# Copy the JAR file from the build context into the Docker image
-COPY ${JAR_FILE} application.jar
-
-CMD apt-get update -y
-
-# Set the default command to run the Java application
+# Run the Java application
 ENTRYPOINT ["java", "-Xmx2048M", "-jar", "/application.jar"]
