@@ -11,7 +11,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
       '/external-api': {
-        target: 'https://task-tracker-37g8.onrender.com',
+        target: 'https://task-tracker-37g8.onrender.com/api/v1',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/external-api/, ''),
       },
