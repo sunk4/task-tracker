@@ -6,6 +6,8 @@ A task tracker helps admins, managers, and users organize, prioritize, assign, a
 - **Managers**: Can create, assign, and monitor tasks and projects within their teams.
 - **Users**: Can view and comment their assigned tasks.
 
+![PostgreSQL Schema Diagram](task_tracker_postgresql.png)
+
 **Note:** The service is running on a free tier on render.com, so performance may be limited. You can access it here: [Task Tracker Service](https://task-tracker-w7g0.onrender.com/projects)
 
 ## Table of Contents
