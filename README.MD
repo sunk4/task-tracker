@@ -2,7 +2,11 @@
 
 A task tracker helps admins, managers, and users organize, prioritize, assign, and track tasks in real-time. It features notifications, status updates, and collaboration tools to ensure deadlines are met and workloads are managed efficiently.
 
-**Note:** The service is running on a free tier on render, so performance may be limited. You can access it here: [Task Tracker Service](https://task-tracker-w7g0.onrender.com/projects)
+- **Admins**: Have full control over all tasks and user management.
+- **Managers**: Can create, assign, and monitor tasks and projects within their teams.
+- **Users**: Can view and comment their assigned tasks.
+
+**Note:** The service is running on a free tier on render.com, so performance may be limited. You can access it here: [Task Tracker Service](https://task-tracker-w7g0.onrender.com/projects)
 
 ## Table of Contents
 
